@@ -34,10 +34,10 @@ package:
 
 functions:
   application:
-    handler: src/application/index.handler
+    handler: src/application/handlers/episodes.handler
     package:
       include:
-        - src/application/index.ts
+        - src/application/handlers/episodes.ts
     events:
       - httpApi:
           path: /

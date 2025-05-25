@@ -51,10 +51,10 @@ npm install -g serverless
 1️⃣ Clonar el repositorio:
 
 ```batch
-git clone https://github.com/HectorCaleroSaico/appointment-service.git
+git clone https://github.com/HectorCaleroSaico/challenge-service.git
 ```
 ```batch
-cd appointment-service
+cd challenge-service
 ```
 2️⃣ Instalar dependencias:
 
@@ -70,10 +70,9 @@ src/
 │   ├── handlers/         # Lambdas
 │   ├── services/         # Servicios de negocio
 │   └── dtos/             # DTOs
+├── config/               # Configuración de los servicios
 ├── domain/               # Modelos de dominio
-├── infrastructure/       # AWS (DynamoDB, SNS, EventBridge)
-tests/                    # Pruebas unitarias
-openapi.yml               # Especificación OpenAPI
+├── infrastructure/       # AWS (DynamoDB) y APIS Externas
 serverless.yml            # Deploy Serverless Framework
 ```
 
@@ -81,59 +80,4 @@ serverless.yml            # Deploy Serverless Framework
 
 ```batch
 serverless deploy
-```
-
-- Esto creará en AWS: Lambdas: appointment, appointmentPE, appointmentCL.
-
-- DynamoDB: Appointments.
-
-- SQS: SQS_PE, SQS_CL, AppointmentQueue.
-
-- SNS: SNS_PE, SNS_CL.
-
-- EventBridge: AppointmentBus.
-
-> 📌 URLs generadas:
-
-API Gateway Desplegado: https://74krqwtf02.execute-api.us-east-1.amazonaws.com/dev/appointments
-
-## 📚 Documentación API
-El proyecto genera automáticamente un archivo openapi.yml y una interfaz Swagger UI.
-
-Endpoints:
-
-✚ POST **/appointments**
-
-- Registra una nueva cita (estado inicial: pending).
-
-Body:
-
-```json
-{
-  "insuredId": "12345",
-  "scheduleId": 100,
-  "countryISO": "PE"
-}
-```
-
-🔍 GET **/appointments/{insuredId}**
-
-- Lista citas registradas por código del asegurado.
-
-## 📄 Ver documentación en  Swagger UI
-
-```batch
-npm run documentation
-```
-
-✅ Pruebas Unitarias:
-
-```batch
-npm test
-```
-
-🛑 Eliminar Recursos:
-
-```batch
-serverless remove
 ```
