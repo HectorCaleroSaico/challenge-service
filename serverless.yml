@@ -1,0 +1,44 @@
+# "org" ensures this Service is used with the correct Serverless Framework Access Key.
+org: fenrir
+# "app" enables Serverless Framework Dashboard features and sharing them with other Services.
+app: challenge-service
+# "service" is the name of this project. This will also be added to your AWS resource names.
+service: challenge-service
+
+provider:
+  name: aws
+  runtime: nodejs20.x
+  region: us-east-1
+  environment:
+    DB_TABLE_NAME: 'service_star_wars'
+    CACHE_TABLE_NAME: 'cache_service'
+
+build:
+  esbuild:
+    bundle: true
+    minify: false
+    exclude: 
+      - '**/*'
+    packages: external
+    buildConcurrency: 3
+    sourcemap:
+      type: linked
+      setNodeOptions: true
+
+package:
+  individually: true
+  patterns:
+    - '!**/*'
+    - '.build/**'
+    - '!node_modules/**'
+
+functions:
+  application:
+    handler: src/application/index.handler
+    package:
+      include:
+        - src/application/index.ts
+    events:
+      - httpApi:
+          path: /
+          method: get
