@@ -1,3 +1,5 @@
+import { Rating } from './Rating';
+
 export class Episode {
 
     constructor(

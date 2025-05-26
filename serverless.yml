@@ -13,11 +13,18 @@ provider:
     DB_TABLE_NAME: 'service_star_wars'
     CACHE_TABLE_NAME: 'cache_service'
 
+#layers: 
+  #axios:
+    #path: layers
+    #compatibleRuntimes:
+      #- nodejs20.x
+    #retain: true
+
 build:
   esbuild:
     bundle: true
     minify: false
-    exclude: 
+    exclude:
       - '**/*'
     packages: external
     buildConcurrency: 3
@@ -30,14 +37,16 @@ package:
   patterns:
     - '!**/*'
     - '.build/**'
-    - '!node_modules/**'
+    - 'node_modules/**'
 
 functions:
   application:
-    handler: src/application/handlers/episodes.handler
+    handler: src/application/handlers/merged.handler
     package:
       include:
-        - src/application/handlers/episodes.ts
+        - src/application/handlers/merged.ts
+    #layers:
+      #- { Ref: AxiosLambdaLayer }
     events:
       - httpApi:
           path: /
