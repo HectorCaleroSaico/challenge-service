@@ -30,9 +30,6 @@ export class DynamoDBRepository implements IEpisodeMergedRespository {
         if (!result.Items || result.Items.length == 0) return null; 
 
         const item = result.Items[0];
-        
-        console.log('item: ', item);
-        console.log('Array: ', JSON.stringify(item?.ratings?.L));
 
         const ratings: Rating[] | undefined = item?.ratings?.L?.reduce<Rating[]>((accumulator, item) => {
 

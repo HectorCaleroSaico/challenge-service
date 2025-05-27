@@ -62,6 +62,8 @@ export class EpisodesService {
 
         console.log('Episode Alt: ', episodeAlt);
 
+        if (episodeAlt) return episodeAlt;
+
         const episode: Episode | null = await this.episodesRepository.getEpisodeById(episodeId);
 
         if (!episode) return null;
