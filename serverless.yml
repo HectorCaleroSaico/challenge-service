@@ -9,16 +9,16 @@ provider:
   name: aws
   runtime: nodejs20.x
   region: us-east-1
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - dynamodb:PutItem
+        - dynamodb:UpdateItem
+        - dynamodb:Query
+      Resource: !GetAtt EpisodesMergedTable.Arn
   environment:
-    DB_TABLE_NAME: 'service_star_wars'
+    DB_TABLE_NAME: 'EpisodesMerged'
     CACHE_TABLE_NAME: 'cache_service'
-
-#layers: 
-  #axios:
-    #path: layers
-    #compatibleRuntimes:
-      #- nodejs20.x
-    #retain: true
 
 build:
   esbuild:
@@ -45,9 +45,26 @@ functions:
     package:
       include:
         - src/application/handlers/merged.ts
-    #layers:
-      #- { Ref: AxiosLambdaLayer }
     events:
-      - httpApi:
-          path: /
+      #- httpApi:
+        #path: fusionados/
+        #method: get
+      - http:
+          path: fusionados/{episodeId}
           method: get
+
+resources:
+  Resources:
+    EpisodesMergedTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: EpisodesMerged
+        AttributeDefinitions:
+          - AttributeName: episodeId
+            AttributeType: S
+        KeySchema:
+          - AttributeName: episodeId
+            KeyType: HASH
+        BillingMode: PAY_PER_REQUEST
+
+        

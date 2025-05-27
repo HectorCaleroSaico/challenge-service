@@ -15,7 +15,9 @@ export class EpisodeMerged {
         public metaScore?: number,
         public imdbRating?: number,
         public imdbVotes?: number,
-        public ratings?: Rating[]
+        public ratings?: Rating[],
+        public createdAt?: Date,
+        public updatedAt?: Date
     ) {}
 }
 
