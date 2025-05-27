@@ -81,3 +81,15 @@ serverless.yml            # Deploy Serverless Framework
 ```batch
 serverless deploy
 ```
+
+## 📚 Documentación API
+
+Endpoints:
+
+🔍 GET **fusionados/{episodeId}**
+
+- Obtener episodio por Id
+
+> 📌 URLs generadas:
+
+API Gateway Desplegado: https://sor85y1594.execute-api.us-east-1.amazonaws.com/dev/fusionados/
